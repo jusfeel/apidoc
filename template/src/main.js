@@ -388,10 +388,18 @@ function init () {
   $('.sidenav').find('a').on('click', function (e) {
     e.preventDefault();
     const id = this.getAttribute('href');
+
     if (apiProject.template.aloneDisplay) {
-      const active = document.querySelector('.sidenav > li.active');
-      if (active) { active.classList.remove('active'); }
-      this.parentNode.classList.add('active');
+      // Remove active class from all list items
+      document.querySelectorAll('.sidenav li.active').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      // Add active class to the correct list item
+      const listItem = this.closest('li[data-name]');
+      if (listItem) {
+        listItem.classList.add('active');
+      }
     } else {
       const el = document.querySelector(id);
       if (el) { $('html,body').animate({ scrollTop: el.offsetTop }, 400); }
