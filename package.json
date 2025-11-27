@@ -1,6 +1,6 @@
 {
-  "name": "apidoc",
-  "version": "1.2.0",
+  "name": "@jusfeel/apidoc",
+  "version": "1.2.2",
   "description": "RESTful web API Documentation Generator",
   "author": "Peter Rottmann <rottmann@inveris.de>",
   "license": "MIT",
@@ -10,10 +10,10 @@
   "homepage": "https://apidocjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/apidoc/apidoc.git"
+    "url": "https://github.com/jusfeel/apidoc.git"
   },
   "bugs": {
-    "url": "https://github.com/apidoc/apidoc/issues"
+    "url": "https://github.com/jusfeel/apidoc/issues"
   },
   "scripts": {
     "build-example": "./bin/apidoc -v -i example/ -o /tmp/apidoc-output",

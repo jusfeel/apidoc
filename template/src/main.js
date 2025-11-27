@@ -375,7 +375,7 @@ function init () {
   // Bootstrap Scrollspy
   if (!apiProject.template.aloneDisplay) {
     document.body.dataset.spy = 'scroll';
-    $('body').scrollspy({ target: '#scrollingNav' });
+    $('body').scrollspy({ target: '#scrollingNav', offset: 100 });
   }
 
   // when we click on an input that was previously highlighted because it was empty, remove the red border
@@ -388,18 +388,10 @@ function init () {
   $('.sidenav').find('a').on('click', function (e) {
     e.preventDefault();
     const id = this.getAttribute('href');
-
     if (apiProject.template.aloneDisplay) {
-      // Remove active class from all list items
-      document.querySelectorAll('.sidenav li.active').forEach(el => {
-        el.classList.remove('active');
-      });
-
-      // Add active class to the correct list item
-      const listItem = this.closest('li[data-name]');
-      if (listItem) {
-        listItem.classList.add('active');
-      }
+      const active = document.querySelector('.sidenav > li.active');
+      if (active) { active.classList.remove('active'); }
+      this.parentNode.classList.add('active');
     } else {
       const el = document.querySelector(id);
       if (el) { $('html,body').animate({ scrollTop: el.offsetTop }, 400); }
