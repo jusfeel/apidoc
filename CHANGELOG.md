@@ -1,5 +1,13 @@
 # apiDoc Changelog
 
+### 1.2.3
+
+* Security: Remove Bootstrap popover/tooltip components to eliminate XSS vulnerability (CVE-2024-6484, CVE-2025-1647)
+* Security: Update esbuild-loader to 4.4.2 to fix security vulnerability (GHSA-67mh-4wv8-2f99)
+* Security: Replace popover buttons with inline permission descriptions (no information loss)
+* Dev: Add development environment setup with watch mode and local HTTP server
+* Dev: Add new npm scripts: `dev:build`, `dev:watch`, `dev:serve`, and `dev`
+
 ### 1.2.0
 
 * Allow generation of `api-data.json` file with an option flag (PR #1427 by Henrik Gemal)
