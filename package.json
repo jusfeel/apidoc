@@ -18,6 +18,10 @@
   "scripts": {
     "build-example": "./bin/apidoc -v -i example/ -o /tmp/apidoc-output",
     "build-devxample": "./bin/apidoc -v -i example/ -o /tmp/apidoc-output --debug",
+    "dev:build": "./bin/apidoc -v -i example/ -o dev-output --debug",
+    "dev:watch": "node scripts/dev-watch.js",
+    "dev:serve": "http-server dev-output -p 8081 -o",
+    "dev": "npm-run-all --parallel dev:watch dev:serve",
     "eslint": "./node_modules/.bin/eslint --ext js,mjs lib bin/apidoc template/src",
     "pre-commit": "npm run eslint && npm run test",
     "serve": "npm run build-example && docker run --rm --name apidoc -p 8080:80 -v /tmp/apidoc-output:/usr/share/nginx/html:ro -d nginx",
@@ -73,6 +77,9 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "mocha": "^9.1.3"
+    "chokidar": "^3.6.0",
+    "http-server": "^14.1.1",
+    "mocha": "^9.1.3",
+    "npm-run-all": "^4.1.5"
   }
 }
