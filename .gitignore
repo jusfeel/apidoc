@@ -4,6 +4,8 @@ npm-debug.log
 doc/
 # used in tests
 tmp/
+# development output
+dev-output/
 .idea
 test/*/fixtures*/vendor/
 test/apidoc/fixtures*/css/
