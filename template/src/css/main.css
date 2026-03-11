@@ -36,6 +36,369 @@
   border: 1px solid var(--red);
 }
 
+/* ------------------------------------------------------------------------------------------
+ * Layout and utilities (replacing Bootstrap base)
+ * ------------------------------------------------------------------------------------------ */
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  box-sizing: border-box;
+}
+
+.col-sm-3,
+.col-lg-2 {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col-sm-3 {
+  width: 25%;
+}
+
+.col-lg-2 {
+  width: 16.666667%;
+}
+
+.col-sm-9,
+.col-lg-10 {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col-sm-9 {
+  width: 75%;
+}
+
+.col-lg-10 {
+  width: 83.333333%;
+}
+
+@media (min-width: 992px) {
+  .col-lg-2 {
+    width: 16.666667%;
+  }
+  .col-lg-10 {
+    width: 83.333333%;
+  }
+}
+
+@media (max-width: 991px) {
+  .col-sm-3 {
+    width: 25%;
+  }
+  .col-sm-9 {
+    width: 75%;
+  }
+}
+
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.hide {
+  display: none !important;
+}
+
+.visible-xs {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .visible-xs {
+    display: block !important;
+  }
+}
+
+.text-muted,
+.muted {
+  color: var(--main-gray);
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  background-color: transparent;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-default,
+.btn-secondary {
+  color: #333;
+  background-color: #fff;
+  border-color: var(--light-gray);
+}
+
+.btn-default:hover,
+.btn-secondary:hover {
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.btn-primary {
+  color: var(--white);
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #006699;
+  border-color: #006699;
+}
+
+.btn-danger {
+  color: var(--white);
+  background-color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-success {
+  color: var(--white);
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--primary);
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.25rem;
+  font-size: 1.25rem;
+}
+
+.btn-xs {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Wells */
+.well {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+
+.well-sm {
+  padding: 0.5rem 1rem;
+}
+
+/* Form controls */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+  background-color: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  outline: 0;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group-addon {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #555;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px 0 0 4px;
+}
+
+.input-group-addon + .form-control,
+.input-group .form-control {
+  border-radius: 0 4px 4px 0;
+  border-left: 0;
+}
+
+.input-group .form-control:first-child {
+  border-radius: 4px 0 0 4px;
+  border-right: 0;
+}
+
+.control-label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.form-horizontal .form-group {
+  /* display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; */
+  display: block;
+}
+
+.form-horizontal .form-group::before,
+.form-horizontal .form-group::after {
+  display: table;
+  content: " ";
+}
+
+.form-horizontal .form-group::after {
+  clear: both;
+}
+
+.form-horizontal .control-label {
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding-top: 0.375rem;
+  padding-right: 1rem;
+  text-align: left;
+}
+
+.form-horizontal .form-group > div:not([class]) {
+  flex: 1 1 auto;
+  max-width: 75%;
+}
+
+.col-md-3 {
+  width: 25%;
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+.col-md-6 {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+.col-md-9 {
+  width: 75%;
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+
+/* Tabs */
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-tabs,
+.nav-tabs-examples {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.nav-tabs li,
+.nav-tabs-examples li {
+  list-style: none;
+  margin: 0;
+}
+
+.nav-tabs a,
+.nav-tabs-examples a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.nav-tabs a:hover,
+.nav-tabs-examples a:hover {
+  border-bottom-color: var(--light-gray);
+}
+
+.nav-tabs .active a,
+.nav-tabs-examples .active a {
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+
+.tab-content .tab-pane {
+  display: none;
+}
+
+.tab-content .tab-pane.active {
+  display: block;
+}
+
 /** for some reason the iOS safari style is applied on date inputs */
 input[type="date"] {
   line-height: 1.4 !important;
@@ -44,16 +407,6 @@ input[type="date"] {
 /* ------------------------------------------------------------------------------------------
  * Content
  * ------------------------------------------------------------------------------------------ */
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('./glyphicons-halflings-regular.eot');
-  src: url('./glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-    url('./glyphicons-halflings-regular.woff') format('woff'),
-    url('./glyphicons-halflings-regular.woff2') format('woff2'),
-    url('./glyphicons-halflings-regular.ttf') format('truetype'),
-    url('./glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-}
-
 /* Hide vertical scrollbar on off canvas animation ("left" positioning) */
 html {
   overflow-x: hidden;
@@ -205,7 +558,9 @@ td.code {
   bottom: 0;
   z-index: 10;
   background-color: var(--dark-gray);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow:
+    0 2px 5px 0 rgb(0 0 0 / 16%),
+    0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .sidenav {
@@ -247,7 +602,6 @@ td.code {
   background-color: var(--main-gray);
 }
 
-
 .sidenav > li.active > a {
   position: relative;
   background-color: var(--primary);
@@ -280,9 +634,9 @@ td.code {
 
   .row-offcanvas {
     position: relative;
-    -webkit-transition: all .25s ease-out;
-    -o-transition: all .25s ease-out;
-    transition: all .25s ease-out;
+    -webkit-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
     left: 0;
   }
 
@@ -305,7 +659,7 @@ td.code {
     background: var(--dark-gray);
     width: 100%;
   }
-  
+
   .nav-toggle .btn {
     margin: 10px 14px;
   }
@@ -323,7 +677,8 @@ td.code {
   .row-offcanvas.active .sidebar-offcanvas {
     left: 0 !important; /* 6 columns */
   }
-  .row-offcanvas.active, .row-offcanvas.active .nav-toggle {
+  .row-offcanvas.active,
+  .row-offcanvas.active .nav-toggle {
     left: 200px;
   }
   /* Styling the three lines to make it an X */
@@ -366,18 +721,18 @@ td.code {
  * Prism - Toolbar
  * ------------------------------------------------------------------------------------------ */
 div.code-toolbar.code-toolbar > .toolbar {
-  top: .4rem;
-  right: .4rem;
+  top: 0.4rem;
+  right: 0.4rem;
 }
-div.code-toolbar.code-toolbar > .toolbar > .toolbar-item > button:hover, 
+div.code-toolbar.code-toolbar > .toolbar > .toolbar-item > button:hover,
 div.code-toolbar.code-toolbar > .toolbar > .toolbar-item > button:focus {
   color: var(--white);
 }
 div.code-toolbar.code-toolbar > .toolbar > .toolbar-item > button {
   color: var(--light-gray);
-  padding: .5em;
+  padding: 0.5em;
   background: var(--hover-gray);
-  box-shadow: 0 2px 1px 1px rgba(0,0,0,.5);
+  box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 /* ------------------------------------------------------------------------------------------
@@ -454,7 +809,9 @@ tr.del td {
   position: relative;
 }
 
-.container1 > div, .container2 > div, .container3 > div {
+.container1 > div,
+.container2 > div,
+.container3 > div {
   width: 14px;
   height: 14px;
   background-color: #0088cc;
@@ -484,10 +841,22 @@ tr.del td {
   transform: rotateZ(90deg);
 }
 
-.circle1 { top: 0; left: 0; }
-.circle2 { top: 0; right: 0; }
-.circle3 { right: 0; bottom: 0; }
-.circle4 { left: 0; bottom: 0; }
+.circle1 {
+  top: 0;
+  left: 0;
+}
+.circle2 {
+  top: 0;
+  right: 0;
+}
+.circle3 {
+  right: 0;
+  bottom: 0;
+}
+.circle4 {
+  left: 0;
+  bottom: 0;
+}
 
 .container2 .circle1 {
   -webkit-animation-delay: -1.1s;
@@ -495,8 +864,8 @@ tr.del td {
 }
 
 .container3 .circle1 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
 }
 
 .container1 .circle2 {
@@ -545,17 +914,26 @@ tr.del td {
 }
 
 @-webkit-keyframes bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0.0) }
-  40% { -webkit-transform: scale(1.0) }
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes bouncedelay {
-  0%, 80%, 100% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 40% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
   }
 }
 
@@ -566,7 +944,7 @@ ul.nav-tabs {
   margin: 0;
 }
 
-p.deprecated span{
+p.deprecated span {
   color: var(--red);
   font-weight: bold;
   text-decoration: underline;
@@ -584,7 +962,6 @@ p.deprecated span{
  * ------------------------------------------------------------------------------------------ */
 
 @media print {
-
   #sidenav,
   #version,
   #versions,
@@ -607,7 +984,7 @@ p.deprecated span{
   }
 
   p {
-    color: #000000
+    color: #000000;
   }
 
   pre {
@@ -619,5 +996,19 @@ p.deprecated span{
     position: relative;
     margin: 10px 0 20px 0;
   }
-
 } /* /@media print */
+
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+fieldset {
+  min-width: 0px;
+  padding: 0px;
+  margin: 0px;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+}

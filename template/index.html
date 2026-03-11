@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link
-      href="assets/bootstrap.min.css?__API_CACHE_BUSTING_QUERY_PARAM__"
-      rel="stylesheet"
-      media="screen"
-    />
-    <link
       href="assets/prism.css?__API_CACHE_BUSTING_QUERY_PARAM__"
       rel="stylesheet"
     />
@@ -95,27 +90,13 @@
       </div>
       <div class="pull-right">
         {{#if template.withCompare}}
-          <div class="btn-group">
-            <button
-              id="version"
-              class="btn btn-lg btn-default dropdown-toggle"
-              data-toggle="dropdown"
-            >
-              <strong>{{version}}</strong>&nbsp;<span class="caret"></span>
-            </button>
-            <ul id="versions" class="dropdown-menu open-left">
-              <li><a id="compareAllWithPredecessor" href="#">{{__
-                    "Compare all with predecessor"
-                  }}</a></li>
-              <li class="divider"></li>
-              <li class="disabled"><a href="#">{{__
-                    "show up to version:"
-                  }}</a></li>
-              {{#each versions}}
-                <li class="version"><a href="#">{{this}}</a></li>
-              {{/each}}
-            </ul>
-          </div>
+          <button type="button" id="compareAllWithPredecessor" class="btn btn-default btn-sm">{{__ "Compare all with predecessor"}}</button>
+          <label class="sr-only" for="version">{{__ "show up to version:"}}</label>
+          <select id="version" class="form-control btn-lg" style="display: inline-block; width: auto; vertical-align: middle;">
+            {{#each versions}}
+              <option value="{{this}}" {{#ifCond this '==' ../version}}selected{{/ifCond}}>{{this}}</option>
+            {{/each}}
+          </select>
         {{else}}
           <div id="version" class="well well-sm">
             <strong>{{version}}</strong>
@@ -180,17 +161,12 @@
         </div>
         {{#if template.withCompare}}
         <div class="pull-right">
-          <div class="btn-group">
-            <button class="version btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <strong>{{article.version}}</strong>&nbsp;<span class="caret"></span>
-            </button>
-            <ul class="versions dropdown-menu open-left">
-              <li class="disabled"><a href="#">{{__ "compare changes to:"}}</a></li>
+          <label class="sr-only" for="article-version-{{article.group}}-{{article.name}}-{{article.version}}">{{__ "compare changes to:"}}</label>
+          <select class="versions form-control" style="display: inline-block; width: auto;" data-article-group="{{article.group}}" data-article-name="{{article.name}}" data-article-version="{{article.version}}" id="article-version-{{article.group}}-{{article.name}}-{{article.version}}">
             {{#each versions}}
-              <li class="version"><a href="#">{{this}}</a></li>
+              <option value="{{this}}" {{#ifCond this '==' ../article.version}}selected{{/ifCond}}>{{this}}</option>
             {{/each}}
-            </ul>
-          </div>
+          </select>
         </div>
         {{/if}}
         <div class="clearfix"></div>
@@ -659,21 +635,13 @@
         </div>
 
         <div class="pull-right">
-          <div class="btn-group">
-            <button class="btn btn-success" disabled>
-              <strong>{{article.version}}</strong> {{__ "compared to"}}
-            </button>
-            <button class="version btn btn-danger dropdown-toggle" data-toggle="dropdown">
-              <strong>{{compare.version}}</strong>&nbsp;<span class="caret"></span>
-            </button>
-            <ul class="versions dropdown-menu open-left">
-              <li class="disabled"><a href="#">{{__ "compare changes to:"}}</a></li>
-              <li class="divider"></li>
+          <span class="btn btn-success" style="pointer-events: none;"><strong>{{article.version}}</strong> {{__ "compared to"}}</span>
+          <label class="sr-only" for="compare-version-{{article.group}}-{{article.name}}-{{article.version}}">{{__ "compare changes to:"}}</label>
+          <select class="versions form-control" style="display: inline-block; width: auto; margin-left: 0.5rem;" data-article-group="{{article.group}}" data-article-name="{{article.name}}" data-article-version="{{article.version}}" data-compare-version="{{compare.version}}" id="compare-version-{{article.group}}-{{article.name}}-{{article.version}}">
             {{#each versions}}
-              <li class="version"><a href="#">{{this}}</a></li>
+              <option value="{{this}}" {{#ifCond this '==' ../compare.version}}selected{{/ifCond}}>{{this}}</option>
             {{/each}}
-            </ul>
-          </div>
+          </select>
         </div>
         <div class="clearfix"></div>
 

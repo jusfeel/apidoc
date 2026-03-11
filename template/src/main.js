@@ -7,10 +7,6 @@ import $ from "jquery";
 import { groupBy, extend, some } from "lodash";
 import semver from "semver";
 import Handlebars from "handlebars";
-// bootstrap plugins
-import "bootstrap/js/dropdown";
-import "bootstrap/js/scrollspy";
-import "bootstrap/js/tab";
 
 // Prism is the syntax highlighting lib
 import Prism from "prismjs";
@@ -404,12 +400,6 @@ function init() {
   });
   $("#sections").append(content);
 
-  // Bootstrap Scrollspy
-  if (!apiProject.template.aloneDisplay) {
-    document.body.dataset.spy = "scroll";
-    $("body").scrollspy({ target: "#scrollingNav", offset: 100 });
-  }
-
   // when we click on an input that was previously highlighted because it was empty, remove the red border
   // also listen for change because for numbers you can just click the browser's up/down arrow and it will not focus
   $(".form-control").on("focus change", function () {
@@ -460,7 +450,8 @@ function init() {
    * On Template changes, recall plugins.
    */
   function initDynamic() {
-    const version = $("#version strong").html();
+    const versionEl = document.getElementById("version");
+    const version = versionEl && (versionEl.tagName === "SELECT" ? versionEl.value : versionEl.querySelector("strong")?.textContent?.trim() ?? "");
     $("#sidenav li").removeClass("is-new");
     if (apiProject.template.withCompare) {
       $("#sidenav li[data-version='" + version + "']").each(function () {
@@ -478,12 +469,30 @@ function init() {
       });
     }
 
-    // tabs
-    $(".nav-tabs-examples a").click(function (e) {
-      e.preventDefault();
-      $(this).tab("show");
+    // tabs (vanilla: toggle .active on pane and tab li)
+    function showTab(link) {
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      const id = href.slice(1);
+      const pane = document.getElementById(id);
+      const tabBar = link.closest(".nav-tabs-examples, .nav.nav-tabs");
+      if (!tabBar || !pane) return;
+      tabBar.querySelectorAll("li").forEach((li) => li.classList.remove("active"));
+      link.parentElement.classList.add("active");
+      const content = pane.closest(".tab-content");
+      if (content) content.querySelectorAll(".tab-pane").forEach((p) => p.classList.remove("active"));
+      pane.classList.add("active");
+    }
+    document.querySelectorAll(".nav-tabs-examples a, .nav.nav-tabs a").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        showTab(this);
+      });
     });
-    $(".nav-tabs-examples").find("a:first").tab("show");
+    document.querySelectorAll(".nav-tabs-examples, .nav.nav-tabs").forEach((tabBar) => {
+      const first = tabBar.querySelector("a[href^='#']");
+      if (first) showTab(first);
+    });
 
     // switch content-type for body inputs (json or form-data)
     $(".sample-request-content-type-switch").change(function () {
@@ -510,9 +519,8 @@ function init() {
       // show api
       $(".show-api").click(function () {
         const id = this.getAttribute("href").substring(1);
-        const selectedVersion = document
-          .getElementById("version")
-          .textContent.trim();
+        const versionEl = document.getElementById("version");
+        const selectedVersion = versionEl && (versionEl.tagName === "SELECT" ? versionEl.value : versionEl.textContent.trim());
         const apiName = `.${this.dataset.name}-article`;
         const apiNameVersioned = `[id="${id}-${selectedVersion}"]`;
         const apiGroup = `.${this.dataset.group}-group`;
@@ -533,15 +541,11 @@ function init() {
       });
     }
 
-    // call scrollspy refresh method
-    if (!apiProject.template.aloneDisplay) {
-      $("body").scrollspy("refresh");
-    }
-
     if (apiProject.template.aloneDisplay) {
       const hashVal = decodeURI(window.location.hash);
       if (hashVal != null && hashVal.length !== 0) {
-        const version = document.getElementById("version").textContent.trim();
+        const versionEl = document.getElementById("version");
+        const version = versionEl && (versionEl.tagName === "SELECT" ? versionEl.value : versionEl.textContent.trim());
         const el = document.querySelector(`li .${hashVal.slice(1)}-init`);
         const elVersioned = document.querySelector(
           `li[data-version="${version}"] .show-api.${hashVal.slice(1)}-init`
@@ -558,12 +562,23 @@ function init() {
   //
   // HTML-Template specific jQuery-Functions
   //
-  // Change Main Version
+  // Change Main Version (supports both select and dropdown markup)
+  function getVersionEl() {
+    const el = document.getElementById("version");
+    if (!el) return { el: null, isSelect: false };
+    return { el, isSelect: el.tagName === "SELECT" };
+  }
   function setMainVersion(selectedVersion) {
+    const { el, isSelect } = getVersionEl();
     if (typeof selectedVersion === "undefined") {
-      selectedVersion = $("#version strong").html();
-    } else {
-      $("#version strong").html(selectedVersion);
+      selectedVersion = isSelect ? el.value : (el && el.querySelector("strong")?.textContent?.trim()) ?? "";
+    } else if (el) {
+      if (isSelect) {
+        el.value = selectedVersion;
+      } else {
+        const strong = el.querySelector("strong");
+        if (strong) strong.textContent = selectedVersion;
+      }
     }
 
     // hide all
@@ -611,9 +626,14 @@ function init() {
   }
   setMainVersion();
 
+  $("#version").on("change", function () {
+    if (this.tagName === "SELECT") setMainVersion(this.value);
+  });
+  $(document).on("change", "article .versions", function () {
+    if (this.tagName === "SELECT") changeVersionCompareTo.call(this, { preventDefault: function () {} });
+  });
   $("#versions li.version a").on("click", function (e) {
     e.preventDefault();
-
     setMainVersion($(this).html());
   });
 
@@ -651,14 +671,15 @@ function init() {
   /**
    * Off-Canvas side toggle navigation
    */
-  document
-    .querySelector('[data-toggle="offcanvas"]')
-    .addEventListener("click", function () {
+  const offcanvasToggle = document.querySelector('[data-toggle="offcanvas"]');
+  if (offcanvasToggle) {
+    offcanvasToggle.addEventListener("click", function () {
       const row = document.querySelector(".row-offcanvas");
       if (row) {
         row.classList.toggle("active");
       }
     });
+  }
 
   /**
    * Set initial focus to search input
@@ -707,15 +728,22 @@ function init() {
 
   /**
    * Change version of an article to compare it to an other version.
+   * Supports both dropdown (li.version a) and select (.versions) markup.
    */
   function changeVersionCompareTo(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
-    const $root = $(this).parents("article");
-    const selectedVersion = $(this).html();
-    const $button = $root.find(".version");
-    const currentVersion = $button.find("strong").html();
-    $button.find("strong").html(selectedVersion);
+    const $root = $(this).closest("article");
+    const isSelect = this.tagName === "SELECT";
+    const selectedVersion = isSelect ? this.value : $(this).html();
+    let currentVersion;
+    if (isSelect) {
+      currentVersion = $root.data("compare-version") || $root.data("version");
+    } else {
+      const $button = $root.find(".version");
+      currentVersion = $button.find("strong").html();
+      $button.find("strong").html(selectedVersion);
+    }
 
     const group = $root.data("group");
     const name = $root.data("name");
@@ -844,10 +872,9 @@ function init() {
       $root.after(content);
       const $content = $root.next();
 
-      // Event on.click re-assign
-      $content
-        .find(".versions li.version a")
-        .on("click", changeVersionCompareTo);
+      // Event re-assign (select or dropdown)
+      $content.find(".versions").on("change", changeVersionCompareTo);
+      $content.find(".versions li.version a").on("click", changeVersionCompareTo);
 
       // select navigation
       $(
@@ -874,20 +901,36 @@ function init() {
   function changeAllVersionCompareTo(e) {
     e.preventDefault();
     $("article:visible .versions").each(function () {
-      const $root = $(this).parents("article");
+      const $root = $(this).closest("article");
       const currentVersion = $root.data("version");
-      let $foundElement = null;
-      $(this)
-        .find("li.version a")
-        .each(function () {
-          const selectVersion = $(this).html();
-          if (selectVersion < currentVersion && !$foundElement) {
-            $foundElement = $(this);
+      if (this.tagName === "SELECT") {
+        const options = Array.from(this.options);
+        let predecessor = null;
+        for (let i = 0; i < options.length; i++) {
+          const v = options[i].value;
+          if (semver.valid(v) && semver.valid(currentVersion) && semver.lt(v, currentVersion)) {
+            predecessor = v;
+          } else if (!predecessor && v < currentVersion) {
+            predecessor = v;
           }
-        });
-
-      if ($foundElement) {
-        $foundElement.trigger("click");
+        }
+        if (predecessor) {
+          this.value = predecessor;
+          $(this).trigger("change");
+        }
+      } else {
+        let $foundElement = null;
+        $(this)
+          .find("li.version a")
+          .each(function () {
+            const selectVersion = $(this).html();
+            if (selectVersion < currentVersion && !$foundElement) {
+              $foundElement = $(this);
+            }
+          });
+        if ($foundElement) {
+          $foundElement.trigger("click");
+        }
       }
     });
   }
@@ -964,7 +1007,8 @@ function init() {
     $root.after(content);
     const $content = $root.next();
 
-    // Event on.click needs to be reassigned (should actually work with on ... automatically)
+    // Event reassign (select or dropdown)
+    $content.find(".versions").on("change", changeVersionCompareTo);
     $content.find(".versions li.version a").on("click", changeVersionCompareTo);
 
     $(
