@@ -1,9 +1,10 @@
-# Important note
+# Fork
 
-This fork fixed small bugs, because...
+Bootstap 3 has been replaced from v2.0.0 by custom CSS/JS.
 
-The original project is currently not active maintained!
-See discussion https://github.com/apidoc/apidoc/issues/1436
+UI stil looks like Bootstrap 3.
+
+See discussion https://github.com/apidoc/apidoc/issues/1436 on original project.
 
 # apiDoc
 
