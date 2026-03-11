@@ -9,3 +9,4 @@ dev-output/
 .idea
 test/*/fixtures*/vendor/
 test/apidoc/fixtures*/css/
+.npmrc
