@@ -1,5 +1,9 @@
 # apiDoc Changelog
 
+### 2.0.0
+
+* Replace Bootstrap 3 with vanilla JS and custom CSS (no Bootstrap dependency)
+
 ### 1.2.3
 
 * Security: Remove Bootstrap popover/tooltip components to eliminate XSS vulnerability (CVE-2024-6484, CVE-2025-1647)
