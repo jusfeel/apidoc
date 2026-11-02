@@ -36,7 +36,7 @@
     "restful"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.19.0"
   },
   "os": [
     "darwin",
@@ -46,31 +46,31 @@
     "win32"
   ],
   "dependencies": {
-    "commander": "^10.0.0",
+    "commander": "^14.0.0",
     "diff-match-patch": "^1.0.5",
     "esbuild-loader": "^4.4.2",
-    "expose-loader": "^4.0.0",
+    "expose-loader": "^5.0.0",
     "fs-extra": "^11.0.0",
-    "glob": "^7.2.0",
+    "glob": "^14.0.0",
     "handlebars": "^4.7.7",
-    "iconv-lite": "^0.6.3",
+    "iconv-lite": "^0.7.0",
     "jquery": "^3.6.0",
-    "klaw-sync": "^6.0.0",
+    "klaw-sync": "^8.0.0",
     "lodash": "^4.17.21",
-    "markdown-it": "^12.2.0",
+    "markdown-it": "^15.0.0",
     "nodemon": "^3.0.1",
     "prismjs": "^1.25.0",
     "semver": "^7.5.0",
-    "style-loader": "^3.3.1",
+    "style-loader": "^4.0.0",
     "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1",
+    "webpack-cli": "^7.0.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.177",
     "@types/mocha": "^10.0.0",
-    "@types/node": "^16.11.9",
-    "chokidar": "^3.6.0",
+    "@types/node": "^20.19.0",
+    "chokidar": "^5.0.0",
     "eslint": "^8.38.0",
     "eslint-config-recommended": "^4.1.0",
     "eslint-config-standard": "^17.0.0",
@@ -78,7 +78,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "http-server": "^14.1.1",
-    "mocha": "^9.1.3",
+    "mocha": "^12.0.0",
     "npm-run-all": "^4.1.5"
   }
 }
