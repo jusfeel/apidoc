@@ -1,11 +1,13 @@
 {
   "name": "@jusfeel/apidoc",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "RESTful web API Documentation Generator",
   "author": "Peter Rottmann <rottmann@inveris.de>",
   "license": "MIT",
   "preferGlobal": true,
-  "bin": "bin/apidoc",
+  "bin": {
+    "apidoc": "bin/apidoc"
+  },
   "main": "./lib/index.js",
   "homepage": "https://apidocjs.com",
   "repository": {
